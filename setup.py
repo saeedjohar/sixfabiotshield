@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-from pip.cmdoptions import requirements
+
 
 setup(
     name='sixfab_iotshield',
