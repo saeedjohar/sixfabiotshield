@@ -1,11 +1,7 @@
-from .ADS1x15 import ADS1015
-import time
 
-import RPi.GPIO as GPIO
-GPIO.setmode(GPIO.BCM)
-GPIO.setwarnings(False)
 
 def lux():
+    from .ADS1x15 import ADS1015
     #print'This is lux'
     adc=ADS1015(address=0x49, busnum=1)
     rawLux=adc.read_adc(2,gain=1)
@@ -13,6 +9,11 @@ def lux():
     print 'Lux : %d' %lux
 
 def relay():
+    import time
+    import RPi.GPIO as GPIO
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setwarnings(False)
+
     relay1 = 21
     relay2 = 26
 
