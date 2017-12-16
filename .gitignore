@@ -1,0 +1,6 @@
+.idea
+*.pyc
+dist
+build/
+sixfab_iotshield.egg-info/
+
