@@ -5,9 +5,15 @@ import serial
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
+##-----setting pin------
+statusPin = 13
+power_key = 12
+relay1 = 21
+relay2 = 26
+opto1 = 20
+opto2 = 19
 
 def lux():
-
     #print'This is lux'
     adc=ADS1015(address=0x49, busnum=1)
     rawLux=adc.read_adc(2,gain=1)
@@ -16,11 +22,6 @@ def lux():
 
 
 def relay():
-
-
-    relay1 = 21
-    relay2 = 26
-
     GPIO.setup(relay1, GPIO.OUT)
     GPIO.setup(relay2, GPIO.OUT)
 
@@ -42,10 +43,7 @@ def relay():
     print "RELAY2: OFF"
     time.sleep(2)
 
-def checkStatus():
-    statusPin = 13
-    power_key = 12
-
+def status():
     GPIO.setup(statusPin, GPIO.IN)
     GPIO.setup(power_key, GPIO.OUT)
 
@@ -78,7 +76,6 @@ def connectivity():
     ser.write('AT\r')
     print ser.readline()
     print ser.readline()
-
     time.sleep(1)
     ser.write('AT+CPIN?\r')
     print ser.readline()
@@ -86,25 +83,23 @@ def connectivity():
     ser.close()
     time.sleep(0.1)
 
-
-def adc():
-    print "----------Printing ADS1015 values----------"
+def adc(i):
+    #print "----------Printing ADS1015 values----------"
     adcValues = [0] * 4
-    for i in range(0, 4):
-        adcValues[i] = adc.read_adc(i, gain=1)
-        print "ADC Ch%d : %d" % (i, adcValues[i])
+
+    #for i in range(0, 4):
+    #   adcValues[i] = adc.read_adc(i, gain=1)
+    #   print "ADC Ch%d : %d" % (i, adcValues[i])
+
+    adcValues[i] = adc.read_adc(i, gain=1)
 
 def opto():
-    opto1 = 20
-    opto2 = 19
-
     GPIO.setup(opto1, GPIO.IN)
     GPIO.setup(opto2, GPIO.IN)
     print "----------OPTO TEST----------"
 
     readOpto1 = GPIO.input(opto1)
     readOpto2 = GPIO.input(opto2)
-
     if (readOpto1 == 1):
         print "INPUT1: LOW"
     else:
